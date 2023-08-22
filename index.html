@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        /* Tùy chỉnh thêm CSS của bạn ở đây nếu cần */
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="container">
@@ -15,21 +13,7 @@
     </header>
     <main class="container">
         <section class="row">
-            <div class="col-md-6">
-                <div class="player">
-                    <!-- Trình phát nhạc và thông tin bài hát -->
-                    <audio id="audio-player" controls>
-                        <source id="audio-source" src="./songs/3107.mp3" type="audio/mp3">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <div class="song-info mt-3">
-                        <h2 id="song-title">Song Title</h2>
-                        <p id="artist-name">Artist Name</p>
-                        <pre id="lyrics-text">Lyrics will appear here.</pre>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-4 playlist-and-search">
                 <div class="search">
                     <!-- Ô tìm kiếm -->
                     <input type="text" id="search-input" class="form-control mb-2" placeholder="Search for a song">
@@ -43,7 +27,26 @@
                     </ul>
                 </div>
             </div>
+            <div class="col-md-4 player">
+                <!-- Trình phát nhạc và thông tin bài hát -->
+                <audio id="audio-player" controls>
+                    <source id="audio-source" src="./songs/3107.mp3" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="song-info mt-3">
+                    <h2 id="song-title">Song Title</h2>
+                    <p id="artist-name">Artist Name</p>
+                </div>
+                <div class="toggle-button-container text-center">
+                    <button id="toggle-button" class="btn btn-primary">Show Playlist and Search</button>
+                </div>
+            </div>
+            <div class="col-md-4 lyrics">
+                <h2>Lyrics</h2>
+                <pre id="lyrics-text">Lyrics will appear here.</pre>
+            </div>
         </section>
+        
     </main>
     <footer class="container">
         <p class="text-center">&copy; 2023 My Music Player</p>

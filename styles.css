@@ -16,5 +16,24 @@
     flex: 1;
     padding: 10px;
 }
-
+.toggle-button-container{
+    display: none;
+}
 /* Rest of your existing CSS styles */
+/* ... Phần CSS trước ... */
+
+/* Responsive styling */
+@media (max-width: 420px) {
+    .playlist-and-search {
+        display: none;
+    }
+
+    .toggle-button-container {
+        margin-top: 15px;
+    }
+}
+@media (max-width: 421px) {
+    .toggle-button-container {
+        display: block;
+    }
+}
