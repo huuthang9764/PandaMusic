@@ -1,24 +1,186 @@
-/* styles.css */
-
-#player {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 20px;
+*::before, *::after{
+  padding: 0;
+  margin: 0;
+}
+:root{
+  --pink: #ff74a4;
+  --violet: #9f6ea3;
+  --lightblack: #515C6F;
+  --green:#43C0B8;
+  --blue:#19a0c6;
+  --white: #ffffff;
+  --darkwhite: #cecaca;
+  --pinkshadow: #ffcbdd;
+  --lightbshadow: rgba(0,0,0,0.15);
+}
+@font-face {
+    font-family: 'AVENGEANCE';
+    src: url('./assets/fonts/AVENGEANCE_HEROIC_AVENGER.ttf');
+}
+@font-face {
+  font-family: 'SFUAuchon';
+  src: url('./assets/fonts/SFUAuchonRegular.TTF');
 }
 
-#audio-controls {
-    flex: 1;
-    padding: 10px;
+.mt40{
+  margin-top: 40px;
+  
+}
+.mb40{
+  margin-bottom: 40px;
+}
+.textFont{
+    font-family: 'AVENGEANCE';
+}
+body{
+  height: 100vh;
+  /* background-image: url(./assets/img/talon.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+  background: linear-gradient(var(--blue) 0%, var(--green) 100%);
+}
+.logo{
+  width: 320px;
+  height: 84px;
+}
+.logo img{
+  width: 100%;
+  height: 100%;
 }
 
-#song-list-container {
-    flex: 1;
-    padding: 10px;
+.player{
+  height: 440px;
+  padding-left: 0;
+  padding-right: 0;
+  overflow: hidden;
+  position: relative;
+  border-radius: 15px;
+  background: var(--white);
+  box-shadow: 0px 6px 15px var(--lightbshadow);
 }
+.music{
+  width: 100%;
+  height: 100%;
+}
+.music-thumb{
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  box-shadow: 0px 6px 12px var(--lightbshadow);
+}
+.music-thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.music-name{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 15%;
+  bottom:0;
+  color: #000000;
+  font-size: 26px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.music-name h3{
+  position: absolute;
+  left:20px;
+  font-size: 32px;
+  font-family: 'SFUAuchon';
+}
+.song-info{
+  height: 20%;
+}
+.timer{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  font-size: 14px;
+  color:#999;
+}
+
+.controls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0 60px;
+}
+
+.play{
+  position: relative;
+}
+.play:before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to right bottom, var(--green) , var(--blue));
+  transform: scale(1.5);
+  border-radius: 100rem;
+}
+
+.play-inner{
+  width: 30px;
+  height: 30px;
+  border-radius: 100rem;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+.play-back,
+.play-forward{
+  cursor: pointer;
+}
+.range-input{
+  text-align: center;
+}
+.range{
+  -webkit-appearance: none;  
+  width: 90%; 
+  background: #d3d3d3; 
+  height: 2px; 
+  align-items: center;
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none; 
+  appearance: none;
+  width: 15px; 
+  height: 15px; 
+  border-radius: 50%;
+  background-image: linear-gradient(to right bottom, var(--green) , var(--blue));
+  cursor: pointer; 
+  box-shadow: 0 0 0 5px white, 0 0 0 7px rgba(100,100,111,0.05);
+} 
+
+
+
+
 .toggle-button-container{
     display: none;
 }
+
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .footer p{
+    margin-bottom:0;
+  }
 /* Rest of your existing CSS styles */
 /* ... Phần CSS trước ... */
 

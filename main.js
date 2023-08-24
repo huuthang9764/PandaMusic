@@ -57,128 +57,123 @@ const allSongs = [
         { time: "0:53", text: "Trong một chiều mưa hai đứa chia tay" },] },
     // ...
 ];
-
-let songs = [...allSongs]; // Khởi tạo mảng songs ban đầu từ allSongs
-
+// Lấy các phần tử cần thiết từ DOM
 const audioPlayer = document.getElementById('audio-player');
-const songTitle = document.getElementById('song-title');
-const artistName = document.getElementById('artist-name');
+const playButton = document.querySelector('.play-inner');
+const nextButton = document.getElementById('next');
+const prevButton = document.getElementById('prev');
 const lyricsText = document.getElementById('lyrics-text');
-const playlistItems = document.getElementById('playlist-items');
-const playBtn = document.getSelection('.play-inner');
+const titleElement = document.querySelector('.title-text');
+const rangeInput = document.getElementById('range');
+const durationSpan = document.querySelector('.duration');
+const remainingSpan = document.querySelector('.remaining');
+const repeatButton = document.getElementById('repeat-plist');
 
-playBtn.addEventListener("click", playPause());
+// Khởi tạo các biến
+let currentSongIndex = 0;
+let isPlaying = false;
 
-function playPause(){}
-
-// Tạo danh sách bài hát từ dữ liệu songs
-function createPlaylist() {
-    playlistItems.innerHTML = ''; // Xóa bỏ các phần tử cũ
-
-    songs.forEach((song, index) => {
-        const li = document.createElement('li');
-        li.textContent = song.title;
-        li.className = 'list-group-item';
-        li.addEventListener('click', () => playSong(index));
-        playlistItems.appendChild(li);
-    });
+// Cập nhật thông tin bài hát hiện tại
+function updateSongInfo() {
+    const currentSong = allSongs[currentSongIndex];
+    audioPlayer.src = currentSong.src;
+    lyricsText.innerText = currentSong.lyrics.map(line => line.text).join('\n');
+    titleElement.textContent = currentSong.title;
 }
 
+// Play hoặc pause nhạc
+function togglePlay() {
+    if (isPlaying) {
+        audioPlayer.pause();
+    } else {
+        audioPlayer.play();
+    }
+    
+    isPlaying = !isPlaying;
+    updatePlayButtonIcon();
+}
 
-
-// Phát bài hát khi chọn từ danh sách
-function playSong(index) {
-    const song = songs[index];
-    audioPlayer.src = song.src; // Cập nhật nguồn (source) của audio
-    songTitle.textContent = song.title;
-    artistName.textContent = song.artist;
-    lyricsText.textContent = song.lyrics;
+// Chuyển bài hát tiếp theo
+function nextSong() {
+    currentSongIndex = (currentSongIndex + 1) % allSongs.length;
+    updateSongInfo();
     audioPlayer.play();
 }
 
-// Tìm kiếm bài hát
-const searchInput = document.getElementById('search-input');
-const searchBtn = document.getElementById('search-btn');
-
-searchBtn.addEventListener('click', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const filteredSongs = allSongs.filter(song => song.title.toLowerCase().includes(searchTerm));
-    
-    updatePlaylist(filteredSongs);
-});
-
-// Cập nhật danh sách phát dựa trên kết quả tìm kiếm
-function updatePlaylist(filteredSongs) {
-    songs = [...filteredSongs]; // Cập nhật biến songs
-
-    playlistItems.innerHTML = '';
-
-    filteredSongs.forEach((song, index) => {
-        const li = document.createElement('li');
-        li.textContent = song.title;
-        li.className = 'list-group-item';
-        li.addEventListener('click', () => playSong(index));
-        playlistItems.appendChild(li);
-    });
+// Quay lại bài hát trước
+function prevSong() {
+    currentSongIndex = (currentSongIndex - 1 + allSongs.length) % allSongs.length;
+    updateSongInfo();
+    audioPlayer.play();
 }
 
-// Khởi tạo danh sách bài hát ban đầu
-createPlaylist();
+// Cập nhật thời gian nhạc và hiển thị
+function updateProgress() {
+    const currentTime = audioPlayer.currentTime;
+    const duration = audioPlayer.duration;
 
-let currentSongIndex = 0; // Chỉ số bài hát đang phát
+    rangeInput.value = (currentTime / duration) * 100;
 
-// Lắng nghe sự kiện thay đổi thời gian phát nhạc để cập nhật lời bài hát thời gian thực
+    const remainingTime = duration - currentTime;
+
+    const minutes = Math.floor(remainingTime / 60);
+    const seconds = Math.floor(remainingTime % 60);
+
+    remainingSpan.innerText = `-${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+
+
+// Sự kiện khi nhấn nút play/pause
+playButton.addEventListener('click', () => {
+    togglePlay();
+});
+function updatePlayButtonIcon() {
+    const playIcon = playButton.querySelector('ion-icon[name="play"]');
+    const pauseIcon = playButton.querySelector('ion-icon[name="pause"]');
+    
+    if (isPlaying) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'inline';
+    } else {
+        playIcon.style.display = 'inline';
+        pauseIcon.style.display = 'none';
+    }
+}
+
+// Sự kiện khi nhấn nút next
+nextButton.addEventListener('click', nextSong);
+
+// Sự kiện khi nhấn nút prev
+prevButton.addEventListener('click', prevSong);
+
+// Sự kiện khi nhấn vào thanh progress
+rangeInput.addEventListener('input', () => {
+    const newTime = (rangeInput.value / 100) * audioPlayer.duration;
+    audioPlayer.currentTime = newTime;
+});
+
+// Sự kiện khi bài hát kết thúc
+audioPlayer.addEventListener('ended', nextSong);
+
+// Cập nhật thời gian và progress của nhạc
 audioPlayer.addEventListener('timeupdate', () => {
     const currentTime = audioPlayer.currentTime;
-    updateLyrics(currentTime);
+    const duration = audioPlayer.duration;
+
+    const minutes = Math.floor(currentTime / 60);
+    const seconds = Math.floor(currentTime % 60);
+
+    durationSpan.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    updateProgress();
 });
 
-// Cập nhật lời bài hát theo thời gian thực
-function updateLyrics(currentTime) {
-    const currentSong = allSongs[currentSongIndex];
-    let currentLyrics = "";
+// Khởi tạo bài hát đầu tiên
+updateSongInfo();
 
-    for (let i = 0; i < currentSong.lyrics.length; i++) {
-        const sectionTime = getSecondsFromTimestamp(currentSong.lyrics[i].time);
-        if (sectionTime <= currentTime) {
-            currentLyrics = currentSong.lyrics[i].text;
-        } else {
-            break;
-        }
-    }
-
-    lyricsText.textContent = currentLyrics;
-}
-
-// Chuyển đổi thời gian định dạng "0:00" sang giây
-function getSecondsFromTimestamp(timestamp) {
-    const [minutes, seconds] = timestamp.split(":");
-    return parseInt(minutes) * 60 + parseInt(seconds);
-}
-
-// Khi phát bài hát, cập nhật chỉ số bài hát và lời bài hát
-// function playSong(index) {
-//     currentSongIndex = index;
-//     const song = allSongs[index];
-//     audioPlayer.src = song.src;
-//     lyricsText.textContent = ""; // Đặt lời bài hát về trạng thái rỗng
-//     audioPlayer.play();
-// }
-
-
-// Lắng nghe sự kiện nhấn nút toggle
-// const toggleButton = document.getElementById('toggle-button');
-// toggleButton.addEventListener('click', togglePlaylistAndSearch);
-
-
-// function togglePlaylistAndSearch() {
-//     const playlistAndSearch = document.querySelector('.playlist-and-search');
-
-//     if (playlistAndSearch.style.display === 'none') {
-//         playlistAndSearch.style.display = 'block';
-//         toggleButton.textContent = 'Hide Playlist and Search';
-//     } else {
-//         playlistAndSearch.style.display = 'none';
-//         toggleButton.textContent = 'Show Playlist and Search';
-//     }
-// }
+// Sự kiện khi nhấn nút repeat
+repeatButton.addEventListener('click', () => {
+    audioPlayer.loop = !audioPlayer.loop;
+    repeatButton.classList.toggle('active', audioPlayer.loop);
+});
