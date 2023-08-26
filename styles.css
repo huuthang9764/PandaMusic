@@ -34,6 +34,11 @@ video {
   top:20%;
   left:10%;
 }
+header{
+  position: absolute;
+  top: 1%;
+  z-index: 1;
+}
 .mt40{
   margin-top: 40px;
   
