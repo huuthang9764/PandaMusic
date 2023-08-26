@@ -21,7 +21,19 @@
   font-family: 'SFUAuchon';
   src: url('./assets/fonts/SFUAuchonRegular.TTF');
 }
-
+video {
+  object-fit: cover;
+  width: 100vw;
+  /* height: 100vh; */
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.container{
+  position: absolute;
+  top:20%;
+  left:10%;
+}
 .mt40{
   margin-top: 40px;
   

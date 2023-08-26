@@ -79,6 +79,7 @@ function updateSongInfo() {
     audioPlayer.src = currentSong.src;
     lyricsText.innerText = currentSong.lyrics.map(line => line.text).join('\n');
     titleElement.textContent = currentSong.title;
+    updateProgress();
 }
 
 // Play hoặc pause nhạc
