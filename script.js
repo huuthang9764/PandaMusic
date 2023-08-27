@@ -1,5 +1,6 @@
 const allSongs = [
     { title: '3107', artist: 'W/n', src: './songs/3107.mp3', 
+    imagesM:'./assets/img/ire.jpg',
     lyrics: [{ time: "0:00", text: "........" },
         { time: "0:04", text: "Đêm dần buông" },
         { time: "0:07", text: "Chỉ có đôi ta đứng đây hơi buồn" },
@@ -19,7 +20,9 @@ const allSongs = [
         { time: "0:29", text: "Tình yêu khi xưa đôi ta vụn vỡ" },
         { time: "0:53", text: "Trong một chiều mưa hai đứa chia tay" },]
         },
-    { title: '3107-2', artist: 'W/n', src: './songs/3107-2.mp3', lyrics: [{ time: "0:00", text: "........" },
+    { title: '3107-2', artist: 'W/n', src: './songs/3107-2.mp3', 
+    imagesM:'./assets/img/talon.jpg',
+    lyrics: [{ time: "0:00", text: "........" },
         { time: "0:04", text: "Đêm dần buông" },
         { time: "0:07", text: "Chỉ có đôi ta đứng đây hơi buồn" },
         { time: "0:11", text: "Nhấm nháp những suy tư" },
@@ -37,7 +40,9 @@ const allSongs = [
         { time: "0:46", text: "Để anh bơ vơ mãi phút nơi đây" },
         { time: "0:29", text: "Tình yêu khi xưa đôi ta vụn vỡ" },
         { time: "0:53", text: "Trong một chiều mưa hai đứa chia tay" },] },
-    { title: '3107 id 072019', artist: 'W/n ft 267', src: './songs/3107ID.mp3', lyrics: [{ time: "0:00", text: "........" },
+    { title: '3107 id 072019', artist: 'W/n ft 267', src: './songs/3107ID.mp3', 
+    imagesM:'./assets/img/akali.jpg',
+    lyrics: [{ time: "0:00", text: "........" },
         { time: "0:04", text: "Đêm dần buông" },
         { time: "0:07", text: "Chỉ có đôi ta đứng đây hơi buồn" },
         { time: "0:11", text: "Nhấm nháp những suy tư" },
@@ -70,6 +75,7 @@ const rangeInput = document.getElementById("range");
 const durationSpan = document.querySelector('.duration');
 const remainingSpan = document.querySelector('.remaining');
 const repeatButton = document.getElementById('repeat-plist');
+const imgM = document.querySelector(".imgM");
 
 let isplaying  = true;
 let indexSong = 0;
@@ -77,6 +83,7 @@ let indexSong = 0;
 function updateSong(){
     const currentSong = allSongs[indexSong];
     audioPlayer.src = currentSong.src;
+    imgM.src = currentSong.imagesM;
     titleElement.textContent = currentSong.title;
     updateProgress();
 }
